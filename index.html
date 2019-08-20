@@ -1,12 +1,40 @@
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 <script src="babanas.js"></script>
-<body onload="good();">
-  <div>
-    <canvas id="canvas" width="550" height="500"></canvas>
+<link rel="stylesheet" href="./style.css">
+
+<body onload="startGame();">
+
+
+  <div id="background-wrap">
+      <div class="x1">
+          <div class="cloud"></div>
+      </div>
+  
+      <div class="x2">
+          <div class="cloud"></div>
+      </div>
+  
+      <div class="x3">
+          <div class="cloud"></div>
+      </div>
+  
+      <div class="x4">
+          <div class="cloud"></div>
+      </div>
+  
+      <div class="x5">
+          <div class="cloud"></div>
+      </div>
+     
   </div>
 
-  <div id="badges">
-    <div class="badge white move"></div>
-    <div class="badge white click"></div>
-  </div>
+   
+  <div id="wrapper">
+      <div class="title">Score:</div>
+      <div id="score" class="score"></div>
+    </div>  
+    <div>
+      <canvas id="canvas" width="550" height="500"></canvas>
+    </div>  
+
 </body>
