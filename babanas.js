@@ -4,14 +4,6 @@ function startGame(){
     var topPipe;
     var bottomPipe;
     var mousePos;
-    
-    onmousemove = function(e){
-        // console.log("mouse location:", e.clientX, e.clientY)
-        mousePos = e;
-        if(bottomPipe){
-            bottomPipe.x = mousePos.x - 80;
-        }
-    }
 
     var scoreCounter = 0;
     var score = document.getElementById("score");
@@ -26,7 +18,7 @@ function startGame(){
     createjs.Touch.enable(stage, false, true);
     // debugger;
     var cont = stage.addChild(new createjs.Container())
-    .set({mouseEnabled:false, mouseChildren:false});
+    // .set({mouseEnabled:false, mouseChildren:false});
 
     addBottomGate();
     addTopGate();
@@ -207,7 +199,6 @@ function startGame(){
         img.height = PRECENT * 2
 
         var bmp = new createjs.Bitmap(img);
-        // var xPlace = (mousePos) ? mousePos.x :  window.innerWidth/2 - bmp.image.width/2
 
         cont.addChild(bmp);
         bmp.set({
@@ -229,9 +220,19 @@ function startGame(){
     stage.updateViewport(w,h);
     // Layout other assets
     stage.update();
+
     }
 
-    stage.on("stagemousedown", function() { clicked = true; })
+    stage.on("stagemousedown", function() { 
+        console.log("stagemousedown");
+     })
 
+    stage.addEventListener("stagemousemove", function (evt) {
+        // console.log("stagemousemove",evt.stageX,evt.stageY);
+        mousePos = {x:evt.stageX,y:evt.stageY}
+        if(bottomPipe){
+            bottomPipe.x = mousePos.x - 80;
+        }
+    });
     // createLockup(["EaselJS"]);
 }
