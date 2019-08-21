@@ -26,7 +26,7 @@ function startGame(){
     // Load the banana
     var img = document.createElement("img");
     // img.crossOrigin = "Anonymous";
-    img.src = "./Banana.png";
+    img.src = "./banana.png";
     img.onload = init;
     var bmp = new createjs.Bitmap(img);
     handleResize();
