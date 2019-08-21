@@ -43,13 +43,21 @@ function startGame(){
     var counter = 0;
     // Tick Code
     var clicked = false;
-
+    var slide = 0.999;
 
     function tick(event) {
-                if (counter % 7 === 0) {
+                if (counter % 17 === 0) {
                     addBanana();  
+                    // debugger;
                 }
                 counter++;
+                if(topPipe.x + topPipe.image.width > window.innerWidth){
+                    slide = 0.999;
+                }
+                else if(topPipe.x - topPipe.image.width <= 0){
+                    slide = 1.001;
+                }
+                topPipe.x = topPipe.x * slide
                 
                 var factor = 1,
                     DIST = canvas.width/10,
@@ -82,7 +90,6 @@ function startGame(){
                     // b.addX = -difX/DIST * ADD* (b.scale) * factor;
                     // b.addY = -difY/DIST * ADD* (b.scale) * factor;
                     // }
-                    
                     // if (b.y > canvas.height+30) {
                         // addBanana(b, i); // Reset banana
                     // }
@@ -124,9 +131,12 @@ function startGame(){
         }
         // debugger;
         // Reset banana props
-        var max = 5;
-        var min = 4;
+        var max = 1;
+        var min = 0.5;
         var speed = Math.random() * (max - min + 1) + min;
+
+        var scale = Math.random() * (5 - 2.5 + 1) + 2.5;
+
         var xPlace = (mousePos) ? mousePos.x :  canvas.width/2;
         // console.log();
         // debugger;
@@ -145,7 +155,7 @@ function startGame(){
         // if(b.speed < 5){
         //     b.scale =1;
         // }else{
-            b.scale = b.speed/6.5;
+            b.scale = scale/6.5;
         // }
         // Speed is a factor of scale
     }

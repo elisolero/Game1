@@ -1,11 +1,9 @@
 #wrapper{
-    background: #000;
     position: absolute;
-    color: #fff;
-    left: 30px;
-    padding: 20px;
-    font-size: 40px;
-    top: 40%;
+    color: #000000;
+    left: 2%;
+    top: 9%;
+    font-weight: bold;
 }
 
 html, body {
@@ -26,6 +24,10 @@ html, body {
 	margin: 0;
 	padding: 0;
 	overflow-x: hidden; */
+}
+
+#score{
+    font-size: 43px;
 }
 
 #background-wrap {
