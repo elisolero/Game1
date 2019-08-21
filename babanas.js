@@ -46,7 +46,7 @@ function startGame(){
 
 
     function tick(event) {
-                if (counter % 3 === 0) {
+                if (counter % 7 === 0) {
                     addBanana();  
                 }
                 counter++;
@@ -181,7 +181,7 @@ function startGame(){
         cont.addChild(bmp);
         bmp.set({
             x: xPlace,
-            y: window.innerHeight  - bmp.image.height * 0.41,
+            y: window.innerHeight  - bmp.image.height * 0.6,
             rotation:10,
         });   
         bottomPipe =  bmp;  
