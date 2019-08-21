@@ -87,17 +87,17 @@ function startGame(){
                         // addBanana(b, i); // Reset banana
                     // }
 
-                    if (b.y <= 0) {
-                        // bananas[i]
+                    //IF THE BANANAS REACH THR TOP PIPE
+                    if(b.x < topPipe.x && b.x > (topPipe.x - topPipe.image.width * 0.8) && b.y <= topPipe.y - topPipe.image.height * 0.13
+                    ){
                         // debugger;
-
-                        // b.parent.removeChildAt(b.id)
-                        // stage.removeChild(b)
-                        bananas.splice(i,1);
-                        b.parent.removeChild(b)
                         scoreCounter++;
                         score.innerText = scoreCounter;
-                        // debugger;
+                        bananas.splice(i,1);
+                        b.parent.removeChild(b)                            
+                    }else if (b.y <= 0) {
+                        bananas.splice(i,1);
+                        b.parent.removeChild(b)
                         // addBanana(b, i); // Reset banana
                     }
                 }
