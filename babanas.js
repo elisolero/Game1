@@ -21,31 +21,47 @@ function startGame(){
     // .set({mouseEnabled:false, mouseChildren:false});
 
     
-
     var assetsPath = "./";
-    // var snd_start = 0;
-    
     var sounds = [{
-    src: "top.mp3",
-    data: {
-      audioSprite: [{
-       id: "sound1"
-    //    startTime: snd_start
-      }]
-    }
-    }];
-    
+        src:"top.mp3", data: {
+            audioSprite: [
+                {id:"sound1", startTime:0, duration:2000},
+                {id:"sound2", startTime:1000, duration:400},
+                {id:"sound3", startTime:1700, duration: 1000}
+            ]}
+        }
+    ];
     createjs.Sound.alternateExtensions = ["mp3"];
     createjs.Sound.on("fileload", loadSound);
     createjs.Sound.registerSounds(sounds, assetsPath);
-    
     // after load is complete
-    function loadSound(e) {
-        // debugger;
-        var context = new AudioContext();
-        createjs.Sound.play("sound1");
+    createjs.Sound.play("sound1");
 
-    }
+
+    // var assetsPath = "./";
+    // // var snd_start = 0;
+    
+    // var sounds = [{
+    // src: "top.mp3",
+    // data: {
+    //   audioSprite: [{
+    //    id: "sound1"
+    // //    startTime: snd_start
+    //   }]
+    // }
+    // }];
+    
+    // createjs.Sound.alternateExtensions = ["mp3"];
+    // createjs.Sound.on("fileload", loadSound);
+    // createjs.Sound.registerSounds(sounds, assetsPath);
+    
+    // // after load is complete
+    // function loadSound(e) {
+    //     // debugger;
+    //     var context = new AudioContext();
+    //     createjs.Sound.play("sound1");
+
+    // }
     
 
     addBottomGate();
