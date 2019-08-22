@@ -46,7 +46,7 @@ function startGame(){
     var slide = 0.999;
 
     function tick(event) {
-                if (counter % 10 === 0) {
+                if (counter % 13 === 0) {
                     addBanana();  
                     // debugger;
                 }
@@ -131,8 +131,8 @@ function startGame(){
         }
         // debugger;
         // Reset banana props
-        var max = 4;
-        var min = 3;
+        var max = 2;
+        var min = 1;
         var speed = Math.random() * (max - min + 1) + min;
 
         var scale = Math.random() * (5 - 2.5 + 1) + 2.5;
