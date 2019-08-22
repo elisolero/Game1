@@ -46,7 +46,7 @@ function startGame(){
     var slide = 0.999;
 
     function tick(event) {
-                if (counter % 17 === 0) {
+                if (counter % 10 === 0) {
                     addBanana();  
                     // debugger;
                 }
