@@ -21,21 +21,16 @@ function startGame(){
     // .set({mouseEnabled:false, mouseChildren:false});
 
     
-    var assetsPath = "./";
-    var sounds = [{
-        src:"top.mp3", data: {
-            audioSprite: [
-                {id:"sound1", startTime:0, duration:2000},
-                {id:"sound2", startTime:1000, duration:400},
-                {id:"sound3", startTime:1700, duration: 1000}
-            ]}
-        }
-    ];
+    createjs.Sound.registerPlugins([createjs.WebAudioPlugin]);
     createjs.Sound.alternateExtensions = ["mp3"];
-    createjs.Sound.on("fileload", loadSound);
-    createjs.Sound.registerSounds(sounds, assetsPath);
-    // after load is complete
-    createjs.Sound.play("sound1");
+    createjs.Sound.on("fileload", loadHandler, this);
+    createjs.Sound.registerSound("top.mp3", "sound");
+    function loadHandler(event) {
+        // This is fired for each sound that is registered.
+        var instance = createjs.Sound.play("sound");  // play using id.  Could also use full source path or event.src.
+        instance.on("complete", this.handleComplete, this);
+        instance.volume = 0.5;
+    }
 
 
     // var assetsPath = "./";
