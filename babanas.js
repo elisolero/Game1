@@ -131,8 +131,8 @@ function startGame(){
         }
         // debugger;
         // Reset banana props
-        var max = 1;
-        var min = 0.5;
+        var max = 4;
+        var min = 3;
         var speed = Math.random() * (max - min + 1) + min;
 
         var scale = Math.random() * (5 - 2.5 + 1) + 2.5;
