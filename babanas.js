@@ -20,16 +20,17 @@ function startGame(){
     var cont = stage.addChild(new createjs.Container())
     // .set({mouseEnabled:false, mouseChildren:false});
 
+    
 
     var assetsPath = "./";
-    var snd_start = 0;
+    // var snd_start = 0;
     
     var sounds = [{
     src: "top.mp3",
     data: {
       audioSprite: [{
-       id: "sound1",
-       startTime: snd_start
+       id: "sound1"
+    //    startTime: snd_start
       }]
     }
     }];
@@ -40,7 +41,8 @@ function startGame(){
     
     // after load is complete
     function loadSound(e) {
-        debugger;
+        // debugger;
+        var context = new AudioContext();
         createjs.Sound.play("sound1");
 
     }
