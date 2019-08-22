@@ -28,7 +28,7 @@ function startGame(){
     function loadHandler(event) {
         // This is fired for each sound that is registered.
         var instance = createjs.Sound.play("sound");  // play using id.  Could also use full source path or event.src.
-        instance.on("complete", this.handleComplete, this);
+        // instance.on("complete", handleComplete, this);
         instance.volume = 0.5;
     }
 
