@@ -20,6 +20,32 @@ function startGame(){
     var cont = stage.addChild(new createjs.Container())
     // .set({mouseEnabled:false, mouseChildren:false});
 
+
+    var assetsPath = "./";
+    var snd_start = 0;
+    
+    var sounds = [{
+    src: "Clicks.mp3",
+    data: {
+      audioSprite: [{
+       id: "sound1",
+       startTime: snd_start
+      }]
+    }
+    }];
+    
+    createjs.Sound.alternateExtensions = ["mp3"];
+    createjs.Sound.on("fileload", loadSound);
+    createjs.Sound.registerSounds(sounds, assetsPath);
+    
+    // after load is complete
+    function loadSound(e) {
+        debugger;
+        createjs.Sound.play("sound1");
+
+    }
+    
+
     addBottomGate();
     addTopGate();
 
@@ -46,7 +72,7 @@ function startGame(){
     var slide = 0.999;
 
     function tick(event) {
-                if (counter % 13 === 0) {
+                if (counter % 15 === 0) {
                     addBanana();  
                     // debugger;
                 }
@@ -94,14 +120,28 @@ function startGame(){
                         // addBanana(b, i); // Reset banana
                     // }
 
+
+
                     //IF THE BANANAS REACH THR TOP PIPE
-                    if(b.x < topPipe.x && b.x > (topPipe.x - topPipe.image.width * 0.8) && b.y <= topPipe.y - topPipe.image.height * 0.13
+                    if( b.x < topPipe.x //IF banana left X is smaller then topPipe
+                        && b.x > (topPipe.x - topPipe.image.width * 0.8)
+                        
                     ){
-                        // debugger;
-                        scoreCounter++;
-                        score.innerText = scoreCounter;
-                        bananas.splice(i,1);
-                        b.parent.removeChild(b)                            
+                        var topLimit = b.y <= topPipe.y - topPipe.image.height * 0.13;
+                        var startLimit = b.y <= topPipe.y + topPipe.image.height * 0.2;
+
+                        if(topLimit){
+                            // debugger;
+                            scoreCounter++;
+                            score.innerText = scoreCounter;
+                            bananas.splice(i,1);
+                            b.parent.removeChild(b)   
+                        }else if(startLimit){
+                            b.scale = b.scale * 0.95
+                                // debugger;
+
+                        }
+                         
                     }else if (b.y <= 0) {
                         bananas.splice(i,1);
                         b.parent.removeChild(b)
@@ -133,9 +173,10 @@ function startGame(){
         // Reset banana props
         var max = 2;
         var min = 1;
-        var speed = Math.random() * (max - min + 1) + min;
 
-        var scale = Math.random() * (5 - 2.5 + 1) + 2.5;
+
+        var speed = Math.random() * (max - min + 1) + min;
+        var scale = Math.random() * (max - min + 1) + 2.5;
 
         var xPlace = (mousePos) ? mousePos.x :  canvas.width/2;
         // console.log();
@@ -155,7 +196,7 @@ function startGame(){
         // if(b.speed < 5){
         //     b.scale =1;
         // }else{
-            b.scale = scale/6.5;
+            b.scale = speed/3.5;
         // }
         // Speed is a factor of scale
     }
