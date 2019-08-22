@@ -25,7 +25,7 @@ function startGame(){
     var snd_start = 0;
     
     var sounds = [{
-    src: "Clicks.mp3",
+    src: "top.mp3",
     data: {
       audioSprite: [{
        id: "sound1",
