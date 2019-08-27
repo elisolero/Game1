@@ -135,24 +135,23 @@ function startGame(){
 
 
 
-                    //IF THE BANANAS REACH THR TOP PIPE
-                    if( b.x < topPipe.x //IF banana left X is smaller then topPipe
-                        && b.x > (topPipe.x - topPipe.image.width * 0.8)
-                        
-                    ){
+                    //IF banana left X is in PIPE Range
+                    if( b.x < topPipe.x && b.x > (topPipe.x - topPipe.image.width * 0.8)){
+
                         var topLimit = b.y <= topPipe.y - topPipe.image.height * 0.13;
-                        var startLimit = b.y <= topPipe.y + topPipe.image.height * 0.2;
+                        var startLimit = b.y <= topPipe.y + topPipe.image.height * 0.1;
 
                         if(topLimit){
-                            // debugger;
+                            
                             scoreCounter++;
                             score.innerText = scoreCounter;
                             bananas.splice(i,1);
-                            b.parent.removeChild(b)   
-                        }else if(startLimit){
-                            b.scale = b.scale * 0.95
-                                // debugger;
+                            b.parent.removeChild(b);
 
+                        }else if(startLimit){
+                            if(b.scale > 0.3){
+                                b.scale = b.scale * 0.96
+                            }
                         }
                          
                     }else if (b.y <= 0) {
