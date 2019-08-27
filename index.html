@@ -5,43 +5,40 @@
 <link rel="stylesheet" href="./style.css">
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-<body onload="startGame();">
+<body >
 
-    <!-- <div class="item">
-        <div class="banana"></div>
-        <div class="banana-line"></div>
-     </div> -->
-
+    <!-- Clouds -->
   <div id="background-wrap">
       <div class="x1">
           <div class="cloud"></div>
       </div>
-  
       <div class="x2">
           <div class="cloud"></div>
       </div>
-  
       <div class="x3">
           <div class="cloud"></div>
       </div>
-  
       <div class="x4">
           <div class="cloud"></div>
       </div>
-  
       <div class="x5">
           <div class="cloud"></div>
       </div>
-     
   </div>
 
    
-  <div id="wrapper">
-      <div class="title">Score:</div>
-      <div id="score" class="score"></div>
+    <div id="popUp">
+        <button id="start" type="button" onclick="startGame()" >התחל משחק</button>
     </div>  
+   
+    <div id="wrapper">
+        <div class="title">ניקוד:</div>
+        <div id="score" class="score">0</div>
+        <div id="mycounter">0:00</div>
+    </div>  
+
     <div>
-      <canvas id="canvas" width="550" height="500"></canvas>
+        <canvas id="canvas" width="550" height="500"></canvas>
     </div>  
 
 </body>

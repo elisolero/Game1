@@ -10,6 +10,10 @@ function startGame(){
     score.innerText = scoreCounter;
 
 
+    var popUp = document.getElementById("popUp");
+    popUp.style.display = "none";
+
+
     var canvas = document.getElementById("canvas"),
     stage = new createjs.StageGL(canvas, {antialias:true,transparent:true});
     // stage.setClearColor("#ccc");
@@ -61,11 +65,12 @@ function startGame(){
 
     addBottomGate();
     addTopGate();
+    onTimer();
 
     // Load the banana
     var img = document.createElement("img");
     // img.crossOrigin = "Anonymous";
-    img.src = "./banana.png";
+    img.src = "./assets/images/banana.png";
     img.onload = init;
     var bmp = new createjs.Bitmap(img);
     handleResize();
@@ -83,8 +88,12 @@ function startGame(){
     // Tick Code
     var clicked = false;
     var slide = 0.999;
+    var endGame = false;
 
     function tick(event) {
+                if(endGame){
+                    return;
+                }
                 if (counter % 15 === 0) {
                     addBanana();  
                     // debugger;
@@ -230,7 +239,7 @@ function startGame(){
     function addBottomGate(){
         var img = document.createElement("img");
         // img.crossOrigin = "Anonymous";
-        img.src = "./pipeline.svg";
+        img.src = "./assets/images/pipeline.svg";
         img.onload = init;
 
         let PRECENT = window.innerWidth * 0.3;
@@ -250,10 +259,43 @@ function startGame(){
         bottomPipe =  bmp;  
     }
 
+    var i = 58;
+
+    function onTimer() {
+        // debugger;
+        if(i === undefined){
+            i = 59;
+        }
+
+        let obj = document.getElementById('mycounter');
+        if(i<= 20){
+            obj.style.color = "red";
+        }else if(i<= 40){
+            obj.style.color = "#8e8e00"
+        }
+        if(i< 10){
+            i = "0" + i;
+            if(!obj.classList.contains("blink")){
+                obj.classList.add("blink_me");
+            }
+        }
+        obj.innerHTML = '0:' + i;
+        i--;
+        if (i < 0) {
+            obj.innerHTML = "0";
+            obj.classList.remove("blink_me");
+            endGame = true;
+            // alert('You lose!');
+        }
+        else {
+            setTimeout(onTimer, 1000);
+        }
+    }
+
     function addTopGate(){
         var img = document.createElement("img");
         // img.crossOrigin = "Anonymous";
-        img.src = "./pipeline.svg";
+        img.src = "./assets/images/pipeline.svg";
         img.onload = init;
 
         let PRECENT = window.innerWidth * 0.3;
