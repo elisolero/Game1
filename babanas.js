@@ -259,10 +259,10 @@ function startGame(){
         bottomPipe =  bmp;  
     }
 
-    var i = 58;
+    var i = 15;
 
     function onTimer() {
-        // debugger;
+        
         if(i === undefined){
             i = 59;
         }
@@ -281,10 +281,17 @@ function startGame(){
         }
         obj.innerHTML = '0:' + i;
         i--;
+        
         if (i < 0) {
             obj.innerHTML = "0";
             obj.classList.remove("blink_me");
             endGame = true;
+            let popUp2 = document.getElementById('popUp2');
+            let end = document.getElementById('end');
+            let score = document.getElementById('score');
+            popUp2.style.display = 'block';
+            end.innerText =  'הניקוד שלך: \n ' + score.innerText;
+
             // alert('You lose!');
         }
         else {
@@ -317,6 +324,7 @@ function startGame(){
 
     // Resize Code
     window.addEventListener("resize", handleResize, false);
+
     function handleResize(event) {
         // debugger;
     var w = window.innerWidth,
