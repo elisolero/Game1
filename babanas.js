@@ -105,9 +105,10 @@ function startGame(){
 
                 var condition1 = bounds.y <= bounds.height * -0.1;
                 var condition2 = bounds.height - bounds.y;
-                console.log(bounds);
+                // console.log(bounds);
 
                 
+                //POSITION
                 if(condition1){
                     doubleY = 1.001;
                 }else{
@@ -118,16 +119,16 @@ function startGame(){
                 //     doubleY = 0.999;
                 // }
 
-                topPipe.y *= doubleY;
+                // topPipe.y *= doubleY;
 
+                //SIZE
                 if(topPipe.scaleX > 1.5){
                     double = 0.9995;
                 }else if(topPipe.scaleX < 0.7){
                     double = 1.0005;
                 }
-                topPipe.scaleX *= double; 
-                topPipe.scaleY *= double; 
-                // topPipe.scaleY = topPipe.scaleY + (topPipe.scaleY * 0.0005);
+                // topPipe.scaleX *= double; 
+                // topPipe.scaleY *= double; 
 
 
                 var factor = 1,
