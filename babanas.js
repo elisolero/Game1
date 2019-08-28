@@ -1,7 +1,7 @@
 var startGameText = 'התחל משחק';
 var reloadGameText = 'התחל משחק\nחדש';
 var scoringGameMessage = 'הניקוד שלך: \n ';
-var soundFile = './assets/top.mp3';
+var soundFile = './assets/sounds/Switches100.mp3';
 var audio = new Audio(soundFile);
 
 function renderView(){
@@ -234,7 +234,7 @@ function startGame(){
         bottomPipe =  bmp;  
     }
 
-    var i = 5;
+    var i = 58;
 
     function onTimer() {
         
