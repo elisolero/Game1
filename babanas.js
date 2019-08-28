@@ -1,20 +1,17 @@
 var startGameText = 'התחל משחק';
 var reloadGameText = 'התחל משחק\nחדש';
 var scoringGameMessage = 'הניקוד שלך: \n ';
-var soundFile = './assets/top.mp3'
+var soundFile = './assets/top.mp3';
+var audio = new Audio(soundFile);
 
 function renderView(){
     let start = document.getElementById('start');
     let end = document.getElementById('end');
-
     let width = window.innerWidth;
-    // debugger
     start.style.left = width/2 - start.offsetWidth/2;
     start.style.display = 'block';
     end.style.left = start.style.left;
     end.style.width = start.style.width;
-    // console.log(width);
- 
 }
 
 function startGame(){
@@ -28,10 +25,8 @@ function startGame(){
     var score = document.getElementById("score");
     score.innerText = scoreCounter;
 
-
     var popUp = document.getElementById("popUp");
     popUp.style.display = "none";
-
 
     var canvas = document.getElementById("canvas"),
     stage = new createjs.StageGL(canvas, {antialias:true,transparent:true});
@@ -39,52 +34,8 @@ function startGame(){
     createjs.Ticker.timingMode = createjs.Ticker.RAF;
     // createjs.Ticker.interval = 25;
     createjs.Touch.enable(stage, false, true);
-    // debugger;
     var cont = stage.addChild(new createjs.Container())
     // .set({mouseEnabled:false, mouseChildren:false});
-
-    
-    // createjs.Sound.registerPlugins([createjs.WebAudioPlugin]);
-    // createjs.Sound.alternateExtensions = ["mp3"];
-    // createjs.Sound.on("fileload", loadHandler, this);
-    // createjs.Sound.registerSound(soundFile, "sound");
-
-    var bell = "Bell";
-    createjs.Sound.registerSound(soundFile, bell);
-
-    function loadHandler(event) {
-        // This is fired for each sound that is registered.
-        var instance = createjs.Sound.play("sound");  // play using id.  Could also use full source path or event.src.
-        // instance.on("complete", handleComplete, this);
-        instance.volume = 0.5;
-    }
-
-
-    // var assetsPath = "./";
-    // // var snd_start = 0;
-    
-    // var sounds = [{
-    // src: "top.mp3",
-    // data: {
-    //   audioSprite: [{
-    //    id: "sound1"
-    // //    startTime: snd_start
-    //   }]
-    // }
-    // }];
-    
-    // createjs.Sound.alternateExtensions = ["mp3"];
-    // createjs.Sound.on("fileload", loadSound);
-    // createjs.Sound.registerSounds(sounds, assetsPath);
-    
-    // // after load is complete
-    // function loadSound(e) {
-    //     // debugger;
-    //     var context = new AudioContext();
-    //     createjs.Sound.play("sound1");
-
-    // }
-    
 
     addBottomGate();
     addTopGate();
@@ -108,6 +59,7 @@ function startGame(){
 
     var cached;
     var counter = 0;
+
     // Tick Code
     var clicked = false;
     var slide = 0.999;
@@ -174,7 +126,7 @@ function startGame(){
                         var startLimit = b.y <= topPipe.y + topPipe.image.height * 0.1;
 
                         if(topLimit){
-                            createjs.Sound.play(bell);
+                            audio.play();
                             scoreCounter++;
                             score.innerText = scoreCounter;
                             bananas.splice(i,1);
@@ -370,5 +322,4 @@ function startGame(){
             bottomPipe.x = mousePos.x - 80;
         }
     });
-    // createLockup(["EaselJS"]);
 }
