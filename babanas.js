@@ -3,6 +3,8 @@ var reloadGameText = 'התחל משחק\nחדש';
 var scoringGameMessage = 'הניקוד שלך: \n ';
 var soundFile = './assets/sounds/Switches78.mp3';
 var audio = new Audio(soundFile);
+let iTime = 58;
+
 
 function renderView(){
     let start = document.getElementById('start');
@@ -15,11 +17,16 @@ function renderView(){
 }
 
 function startGame(){
+    let width_in_precent = window.innerWidth * 0.3;
+    var tmpImage = 0;
 
     var checker = false;
     var topPipe;
     var bottomPipe;
     var mousePos;
+    var newTime = iTime;
+    var imageInitSize  = {};
+    var double = 1.0005;
 
     var scoreCounter = 0;
     var score = document.getElementById("score");
@@ -63,6 +70,7 @@ function startGame(){
     // Tick Code
     var clicked = false;
     var slide = 0.999;
+    var doubleY = 1.001;
     var endGame = false;
 
     function tick(event) {
@@ -71,17 +79,57 @@ function startGame(){
                 }
                 if (counter % 15 === 0) {
                     addBanana();  
-                    // debugger;
                 }
                 counter++;
-                if(topPipe.x + topPipe.image.width > window.innerWidth){
+                var limits = topPipe._getBounds();
+                // console.log(() > window.innerWidth)
+                if(limits.x  + limits.width > window.innerWidth){
+                    
                     slide = 0.999;
                 }
-                else if(topPipe.x - topPipe.image.width <= 0){
+                else if(topPipe._getBounds().x <= 0){
                     slide = 1.001;
                 }
-                topPipe.x = topPipe.x * slide
+
+                var opsiTime = ((60 - newTime) / 60) / 250;
+                var newOpsiTime = (slide === 0.999) ? opsiTime * -1 : opsiTime;
                 
+                var bounds = topPipe._getBounds();
+
+                // console.log(topPipe.x,slide, newOpsiTime,opsiTime,newTime)
+                topPipe.x = topPipe.x * (slide + newOpsiTime);
+                // console.log(bounds);
+                // debugger;
+                // console.log(bounds.height + bounds.y)
+
+
+                var condition1 = bounds.y <= bounds.height * -0.1;
+                var condition2 = bounds.height - bounds.y;
+                console.log(bounds);
+
+                
+                if(condition1){
+                    doubleY = 1.001;
+                }else{
+                    doubleY = 0.999;
+                    // debugger;
+                }
+                // else if(bounds.y < 100){
+                //     doubleY = 0.999;
+                // }
+
+                topPipe.y *= doubleY;
+
+                if(topPipe.scaleX > 1.5){
+                    double = 0.9995;
+                }else if(topPipe.scaleX < 0.7){
+                    double = 1.0005;
+                }
+                topPipe.scaleX *= double; 
+                topPipe.scaleY *= double; 
+                // topPipe.scaleY = topPipe.scaleY + (topPipe.scaleY * 0.0005);
+
+
                 var factor = 1,
                     DIST = canvas.width/10,
                     ADD = 10;
@@ -118,9 +166,16 @@ function startGame(){
                     // }
 
 
+                    
+                    // var check1 = b.x < topPipe.x;
+                    // var check2 = b.x > (topPipe.x - topPipe.image.width * 0.8);
 
                     //IF banana left X is in PIPE Range
-                    if( b.x < topPipe.x && b.x > (topPipe.x - topPipe.image.width * 0.8)){
+                    var bounds = topPipe._getBounds();
+                    var check1 = b.x > bounds.x;
+                    var check2 = b.x < bounds.x + bounds.width;
+
+                    if(check1 && check2){
 
                         var topLimit = b.y <= topPipe.y - topPipe.image.height * 0.13;
                         var startLimit = b.y <= topPipe.y + topPipe.image.height * 0.1;
@@ -132,7 +187,7 @@ function startGame(){
                             bananas.splice(i,1);
                             b.parent.removeChild(b);
 
-                        }else if(startLimit){
+                        }else if(startLimit){//CHECK IF BANANAS GO SMALL FOR TOP GATE TO SWALLOW
                             if(b.scale > 0.3){
                                 b.scale = b.scale * 0.96
                             }
@@ -211,33 +266,9 @@ function startGame(){
         cached.cache(-r,-r, r*2,r*2);        
     }
     
-    function addBottomGate(){
-        var img = document.createElement("img");
-        // img.crossOrigin = "Anonymous";
-        img.src = "./assets/images/pipeline.svg";
-        img.onload = init;
-
-        let PRECENT = window.innerWidth * 0.3;
-        PRECENT = (PRECENT < 250) ? PRECENT : 250;
-        img.width = PRECENT
-        img.height = PRECENT * 2
-
-        var bmp = new createjs.Bitmap(img);
-        var xPlace = (mousePos) ? mousePos.x :  window.innerWidth/2 - bmp.image.width/2
-
-        cont.addChild(bmp);
-        bmp.set({
-            x: xPlace,
-            y: window.innerHeight  - bmp.image.height * 0.6,
-            rotation:10,
-        });   
-        bottomPipe =  bmp;  
-    }
-
-    var i = 58;
 
     function onTimer() {
-        
+        var i = newTime;
         if(i === undefined){
             i = 59;
         }
@@ -255,9 +286,9 @@ function startGame(){
             }
         }
         obj.innerHTML = '0:' + i;
-        i--;
+        newTime--;
 
-        if (i < 0) {
+        if (i <= 0) {
             obj.innerHTML = "0";
             obj.classList.remove("blink_me");
             endGame = true;
@@ -280,10 +311,15 @@ function startGame(){
         img.src = "./assets/images/pipeline.svg";
         img.onload = init;
 
-        let PRECENT = window.innerWidth * 0.3;
-        PRECENT = (PRECENT < 250) ? PRECENT : 250;
-        img.width = PRECENT
-        img.height = PRECENT * 2
+        width_in_precent = (width_in_precent < 250) ? width_in_precent : 250;
+        img.width = width_in_precent;
+        img.height = width_in_precent * 2;
+        imageInitSize = {
+            'width' : img.width,
+            'height' : img.height,
+        }
+
+        tmpImage = img.width;
 
         var bmp = new createjs.Bitmap(img);
 
@@ -292,9 +328,32 @@ function startGame(){
             x: window.innerWidth/2 + (img.width/2),
             y:  bmp.image.height * 0.41,
             rotation:200,
-        });   
+        });
         topPipe =  bmp;         
 
+    }
+
+    function addBottomGate(){
+        var img = document.createElement("img");
+        // img.crossOrigin = "Anonymous";
+        img.src = "./assets/images/pipeline.svg";
+        img.onload = init;
+
+        let width_in_precent = window.innerWidth * 0.3;
+        width_in_precent = (width_in_precent < 250) ? width_in_precent : 250;
+        img.width = width_in_precent
+        img.height = width_in_precent * 2
+
+        var bmp = new createjs.Bitmap(img);
+        var xPlace = (mousePos) ? mousePos.x :  window.innerWidth/2 - bmp.image.width/2
+
+        cont.addChild(bmp);
+        bmp.set({
+            x: xPlace,
+            y: window.innerHeight  - bmp.image.height * 0.6,
+            rotation:10,
+        });   
+        bottomPipe =  bmp;  
     }
 
     // Resize Code
