@@ -1,6 +1,7 @@
 var startGameText = 'התחל משחק';
 var reloadGameText = 'התחל משחק\nחדש';
 var scoringGameMessage = 'הניקוד שלך: \n ';
+var soundFile = './assets/top.mp3'
 
 function renderView(){
     let start = document.getElementById('start');
@@ -43,10 +44,14 @@ function startGame(){
     // .set({mouseEnabled:false, mouseChildren:false});
 
     
-    createjs.Sound.registerPlugins([createjs.WebAudioPlugin]);
-    createjs.Sound.alternateExtensions = ["mp3"];
-    createjs.Sound.on("fileload", loadHandler, this);
-    createjs.Sound.registerSound("top.mp3", "sound");
+    // createjs.Sound.registerPlugins([createjs.WebAudioPlugin]);
+    // createjs.Sound.alternateExtensions = ["mp3"];
+    // createjs.Sound.on("fileload", loadHandler, this);
+    // createjs.Sound.registerSound(soundFile, "sound");
+
+    var bell = "Bell";
+    createjs.Sound.registerSound(soundFile, bell);
+
     function loadHandler(event) {
         // This is fired for each sound that is registered.
         var instance = createjs.Sound.play("sound");  // play using id.  Could also use full source path or event.src.
@@ -169,7 +174,7 @@ function startGame(){
                         var startLimit = b.y <= topPipe.y + topPipe.image.height * 0.1;
 
                         if(topLimit){
-                            
+                            createjs.Sound.play(bell);
                             scoreCounter++;
                             score.innerText = scoreCounter;
                             bananas.splice(i,1);
