@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="./style.css">
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-<body>
+<body onload="renderView()">
 
     <!-- Clouds -->
   <div id="background-wrap">
@@ -27,13 +27,15 @@
   </div>
   
     <div id="popUp">
-        <button id="start" type="button" onclick="startGame()" >התחל משחק</button>
+        <div id="end"></div>
+        <div id="endtext"></div>        
+        <button id="start" class="button_example" type="button" onclick="startGame()" >התחל משחק</button>
     </div>  
 
-    <div id="popUp2">
+    <!-- <div id="popUp2">
         <div id="end"></div>
         <div id="endtext"></div>
-    </div>  
+    </div>   -->
    
     <div id="wrapper">
         <div class="title">ניקוד:</div>

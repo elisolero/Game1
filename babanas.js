@@ -1,3 +1,21 @@
+var startGameText = 'התחל משחק';
+var reloadGameText = 'התחל משחק\nחדש';
+var scoringGameMessage = 'הניקוד שלך: \n ';
+
+function renderView(){
+    let start = document.getElementById('start');
+    let end = document.getElementById('end');
+
+    let width = window.innerWidth;
+    // debugger
+    start.style.left = width/2 - start.offsetWidth/2;
+    start.style.display = 'block';
+    end.style.left = start.style.left;
+    end.style.width = start.style.width;
+    // console.log(width);
+ 
+}
+
 function startGame(){
 
     var checker = false;
@@ -259,7 +277,7 @@ function startGame(){
         bottomPipe =  bmp;  
     }
 
-    var i = 15;
+    var i = 5;
 
     function onTimer() {
         
@@ -281,17 +299,17 @@ function startGame(){
         }
         obj.innerHTML = '0:' + i;
         i--;
-        
+
         if (i < 0) {
             obj.innerHTML = "0";
             obj.classList.remove("blink_me");
             endGame = true;
-            let popUp2 = document.getElementById('popUp2');
-            let end = document.getElementById('end');
+            let popUp = document.getElementById('popUp');
             let score = document.getElementById('score');
-            popUp2.style.display = 'block';
-            end.innerText =  'הניקוד שלך: \n ' + score.innerText;
-
+            popUp.style.display = 'block';
+            end.innerText =  scoringGameMessage + score.innerText;
+            start.innerText =  reloadGameText;
+            end.style.display = 'block';
             // alert('You lose!');
         }
         else {
