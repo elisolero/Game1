@@ -196,7 +196,7 @@ function startGame(){
                             
                             createjs.Tween.get(topPipe)
                             .to({y:topY + 10}, 100)
-                            .to({y:topY - 5}, 0)
+                            .to({y:topY - 10}, 0)
                             // .to({rotation:2, rotationDir:1})
                             // .wait(100)
                             // .to({rotation:0, rotationDir:1})
