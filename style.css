@@ -26,6 +26,10 @@ html, body {
 	padding: 0;
 	overflow-x: hidden; */
 }
+img{
+	height: auto;
+	width: auto;
+ }
 
 #score{
     font-size: 43px;

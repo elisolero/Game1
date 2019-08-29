@@ -5,7 +5,8 @@ var startGameMessage = 'עליך להגיע ליותר מ 700 נקודות בד�
 var soundFile = './assets/sounds/Switches78.mp3';
 var audio = new Audio(soundFile);
 let iTime = 58;
-
+var img_1;
+var img_2;
 
 function renderView(){
     let start = document.getElementById('start');
@@ -14,20 +15,23 @@ function renderView(){
     // start.style.left = width/2 - start.offsetWidth/2;
     start.style.display = 'block';
     end.style.display = 'block';
-    console.log(start.offsetWidth)
+    // console.log(start.offsetWidth)
     end.innerText =  startGameMessage;
     end.style.marginTop = window.innerHeight * 0.4;
     // end.style.left = start.style.left;
     // end.style.width = start.clientWidth;
-
+    img_1 = document.getElementById("img_1");
+    img_2 = document.getElementById("img_2");
 }
 
+
 function startGame(){
+
     let width_in_precent = window.innerWidth * 0.3;
     var tmpImage = 0;
+    var topPipe;
 
     var checker = false;
-    var topPipe;
     var bottomPipe;
     var mousePos;
     var newTime = iTime;
@@ -43,15 +47,13 @@ function startGame(){
 
     var canvas = document.getElementById("canvas"),
     stage = new createjs.StageGL(canvas, {antialias:true,transparent:true});
-    // stage.setClearColor("#ccc");
     createjs.Ticker.timingMode = createjs.Ticker.RAF;
     // createjs.Ticker.interval = 25;
     createjs.Touch.enable(stage, false, true);
     var cont = stage.addChild(new createjs.Container())
-    // .set({mouseEnabled:false, mouseChildren:false});
 
     addBottomGate();
-    addTopGate();
+    addTopGateFromHTML();
     onTimer();
 
     // Load the banana
@@ -59,7 +61,7 @@ function startGame(){
     // img.crossOrigin = "Anonymous";
     img.src = "./assets/images/banana.png";
     img.onload = init;
-    var bmp = new createjs.Bitmap(img);
+    // var bmp = new createjs.Bitmap(img);
     handleResize();
 
     var MAX_BANANAS = 300;
@@ -88,25 +90,24 @@ function startGame(){
                 }
                 counter++;
                 var limits = topPipe._getBounds();
-                // console.log(() > window.innerWidth)
+
+                // console.log(limits)
+
                 if(limits.x  + limits.width > window.innerWidth){
-                    
-                    slide = 0.999;
+                    slide = - 1;
                 }
                 else if(topPipe._getBounds().x <= 0){
-                    slide = 1.001;
+                    slide = 1;
                 }
 
-                var opsiTime = ((60 - newTime) / 60) / 250;
-                var newOpsiTime = (slide === 0.999) ? opsiTime * -1 : opsiTime;
+                var opsiTime = ((60 - newTime) / 60) ;
+                var newOpsiTime = (slide === -1) ? opsiTime * -1 : opsiTime;
                 
                 var bounds = topPipe._getBounds();
 
                 // console.log(topPipe.x,slide, newOpsiTime,opsiTime,newTime)
-                topPipe.x = topPipe.x * (slide + newOpsiTime);
-                // console.log(bounds);
-                // debugger;
-                // console.log(bounds.height + bounds.y)
+                topPipe.x = topPipe.x + (slide + newOpsiTime);
+
 
 
                 var condition1 = bounds.y <= bounds.height * -0.1;
@@ -119,7 +120,6 @@ function startGame(){
                     doubleY = 1.001;
                 }else{
                     doubleY = 0.999;
-                    // debugger;
                 }
                 // else if(bounds.y < 100){
                 //     doubleY = 0.999;
@@ -179,15 +179,27 @@ function startGame(){
 
                     //IF banana left X is in PIPE Range
                     var bounds = topPipe._getBounds();
-                    var check1 = b.x > bounds.x;
-                    var check2 = b.x < bounds.x + bounds.width;
+                    var check1 = b.x > bounds.x + 10;
+                    var check2 = b.x < bounds.x + bounds.width - 10;
 
                     if(check1 && check2){
-
-                        var topLimit = b.y <= topPipe.y - topPipe.image.height * 0.13;
-                        var startLimit = b.y <= topPipe.y + topPipe.image.height * 0.1;
+                        var topLimit = b.y <= topPipe.y + topPipe.image.height - 40;
+                        var startLimit = b.y <= topPipe.y + topPipe.image.height * 1.2;
 
                         if(topLimit){
+
+                            // var img = document.getElementById("img");
+                            // topPipe.image = img;
+
+                            var topY = (topPipe.y < 0) ? 0 : topPipe.y;
+                            // var topY = (topPipe.y < 0) ? 0 : topPipe.y;
+                            
+                            createjs.Tween.get(topPipe)
+                            .to({y:topY + 10}, 100)
+                            .to({y:topY - 5}, 0)
+                            // .to({rotation:2, rotationDir:1})
+                            // .wait(100)
+                            // .to({rotation:0, rotationDir:1})
                             audio.play();
                             scoreCounter++;
                             score.innerText = scoreCounter;
@@ -237,8 +249,6 @@ function startGame(){
         var scale = Math.random() * (max - min + 1) + 2.5;
 
         var xPlace = (mousePos) ? mousePos.x :  canvas.width/2;
-        // console.log();
-        // debugger;
         b.set({
             x: xPlace,
             y: bottomPipe.y + bottomPipe.image.height * 0.1,
@@ -249,7 +259,6 @@ function startGame(){
             addY: 0,
             power: 0
         });
-        // debugger;
 
         // if(b.speed < 5){
         //     b.scale =1;
@@ -258,21 +267,6 @@ function startGame(){
         // }
         // Speed is a factor of scale
     }
-
-    function addBottomGateRectangle(){
-        var r = 64;
-        var graphics = new createjs.Graphics();
-        graphics.beginFill("#FF0099")
-          .drawCircle(0,0, r)
-          .endFill();
-      
-        cached = new createjs.Shape(graphics);
-        cont.addChild(cached);
-        cached.x = canvas.width / 2;
-        cached.y = canvas.height / 2;
-        cached.cache(-r,-r, r*2,r*2);        
-    }
-    
 
     function onTimer() {
         var i = newTime;
@@ -310,6 +304,32 @@ function startGame(){
         else {
             setTimeout(onTimer, 1000);
         }
+    }
+
+    function addTopGateFromHTML(){
+
+        var img1 = document.createElement("img");
+        img1.src = "./assets/images/benel1.png";
+        img1.onload = init;
+        img1.width = img_1.width;
+        img1.height = img_1.height;
+        
+        var img2 = document.createElement("img");
+        img2.src = "./assets/images/benel2.png";
+        img2.onload = init;
+        img2.width = img_2.width;
+        img2.height = img_2.height;
+        topPipe = new createjs.Bitmap(img2);
+        topPipe.set({
+                x: window.innerWidth/2 + (img2.width/2),
+                y:  0,
+            });
+
+        cont.addChild(topPipe);
+
+        setInterval(() => {
+            topPipe.image = (topPipe.image === img2) ? img1 : img2;
+        }, 500);
     }
 
     function addTopGate(){
