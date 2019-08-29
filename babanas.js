@@ -1,6 +1,7 @@
 var startGameText = 'התחל משחק';
 var reloadGameText = 'התחל משחק\nחדש';
 var scoringGameMessage = 'הניקוד שלך: \n ';
+var startGameMessage = 'עליך להגיע ליותר מ 1500 נקודות בדקה!';
 var soundFile = './assets/sounds/Switches78.mp3';
 var audio = new Audio(soundFile);
 let iTime = 58;
@@ -10,10 +11,15 @@ function renderView(){
     let start = document.getElementById('start');
     let end = document.getElementById('end');
     let width = window.innerWidth;
-    start.style.left = width/2 - start.offsetWidth/2;
+    // start.style.left = width/2 - start.offsetWidth/2;
     start.style.display = 'block';
-    end.style.left = start.style.left;
-    end.style.width = start.style.width;
+    end.style.display = 'block';
+    console.log(start.offsetWidth)
+    end.innerText =  startGameMessage;
+    end.style.marginTop = window.innerHeight * 0.4;
+    // end.style.left = start.style.left;
+    // end.style.width = start.clientWidth;
+
 }
 
 function startGame(){
