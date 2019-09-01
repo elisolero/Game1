@@ -1,7 +1,7 @@
 var startGameText = 'התחל משחק';
 var reloadGameText = 'התחל משחק\nחדש';
 var scoringGameMessage = 'הניקוד שלך: \n ';
-var startGameMessage = 'עליך להגיע ליותר מ 499 נקודות בדקה!';
+var startGameMessage = 'עליך להגיע ליותר מ 498 נקודות בדקה!';
 var soundFile = './assets/sounds/Switches78.mp3';
 var audio = new Audio(soundFile);
 let iTime = 58;
@@ -193,7 +193,9 @@ function startGame(){
 
                             var topY = (topPipe.y < 0) ? 0 : topPipe.y;
                             // var topY = (topPipe.y < 0) ? 0 : topPipe.y;
-                            if(topY+ topPipe.image.height > bottomPipe.y){
+                            // console.log(topY+ topPipe.image.height , bottomPipe.y)
+                            // console.log(topY+ topPipe.image.height > bottomPipe.y)
+                            if(topY+ topPipe.image.height < bottomPipe.y){
                                 createjs.Tween.get(topPipe)
                                 .to({y:topY + 10}, 100)
                                 .to({y:topY - 5 - (60 - newTime) * 0.3 }, 100)   
