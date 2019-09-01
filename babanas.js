@@ -1,7 +1,7 @@
 var startGameText = 'התחל משחק';
 var reloadGameText = 'התחל משחק\nחדש';
 var scoringGameMessage = 'הניקוד שלך: \n ';
-var startGameMessage = 'עליך להגיע ליותר מ 500 נקודות בדקה!';
+var startGameMessage = 'עליך להגיע ליותר מ 499 נקודות בדקה!';
 var soundFile = './assets/sounds/Switches78.mp3';
 var audio = new Audio(soundFile);
 let iTime = 58;
