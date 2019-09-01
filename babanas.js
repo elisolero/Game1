@@ -193,10 +193,15 @@ function startGame(){
 
                             var topY = (topPipe.y < 0) ? 0 : topPipe.y;
                             // var topY = (topPipe.y < 0) ? 0 : topPipe.y;
-                            
-                            createjs.Tween.get(topPipe)
-                            .to({y:topY + 10}, 100)
-                            .to({y:topY - 5 - (60 - newTime) * 0.3 }, 100)
+                            if(topY+ topPipe.image.height > bottomPipe.y){
+                                createjs.Tween.get(topPipe)
+                                .to({y:topY + 10}, 100)
+                                .to({y:topY - 5 - (60 - newTime) * 0.3 }, 100)   
+                            }else{
+                                createjs.Tween.get(topPipe)
+                                .to({y:topY - 5 - (60 - newTime) * 0.3 }, 100)   
+                            }
+
                             // .to({rotation:2, rotationDir:1})
                             // .wait(100)
                             // .to({rotation:0, rotationDir:1})
