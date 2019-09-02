@@ -104,6 +104,7 @@ function startGame(){
     var slide = 0.999;
     var doubleY = 1.001;
     var endGame = false;
+    var score = false;
 
     function tick(event) {
                 if(endGame){
@@ -148,25 +149,14 @@ function startGame(){
                 }else if(topPipe.scaleX < 0.7){
                     double = 1.0005;
                 }
-                // topPipe.scaleX *= double; 
-                // topPipe.scaleY *= double; 
 
+                //SET IMAGE
+                topPipe.image = (score) ? img2 : img1;
 
-                var factor = 1,
-                    DIST = canvas.width/10,
-                    ADD = 10;
-                // if (clicked) {
-                //     factor = 5;
-                //     DIST = canvas.width/5;
-                // }
                 
                 for (var i=bananas.length-1; i>=0; i--) {
-                    // debugger;
                     var b = bananas[i];
                     b.y -= b.speed;
-                    // var num = (b.y > canvas.height / 2) ? 0.002 : -0.002;
-                    // b.x -= b.x * num;
-
                     b.rotation = (b.rotation + b.rotationSpeed) % 360;
                     // b.speed *= 1.01;
                     
@@ -204,16 +194,20 @@ function startGame(){
                         if(topLimit){
 
                             var topY = (topPipe.y < 0) ? 0 : topPipe.y;
+
                             if(topY+ topPipe.image.height < bottomPipe.y){
                                 createjs.Tween.get(topPipe)
                                 .to({y:topY + 10}, 100)
                                 .to({y:topY - 5 - (60 - newTime) * 0.3 }, 100)   
                             }else{
                                 createjs.Tween.get(topPipe)
-                                .to({y:topY - 5 - (60 - newTime) }, 100)   
+                                .to({y:topY - 50 - (60 - newTime) }, 100)   
                             }
 
-
+                            score = true;
+                            setTimeout(() => {
+                                score = false;
+                            }, 200);
 
                             audio.play();
                             scoreCounter++;
@@ -233,6 +227,9 @@ function startGame(){
                         // addBanana(b, i); // Reset banana
                     }
                 }
+
+                // debugger;
+
                 clicked = false;
                 stage.update(event);
     }
@@ -336,9 +333,10 @@ function startGame(){
 
     function changePerson(){
         
-        setInterval(() => {
-            topPipe.image = (topPipe.image === img2) ? img1 : img2;
-        }, 5000);
+        setTimeout(() => {
+            img1 = img3;
+            img2 = img4;
+        }, 30000);
     }
 
     function addTopGate(){
