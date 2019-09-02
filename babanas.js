@@ -164,23 +164,6 @@ function startGame(){
                     b.y += b.addY;
                     // b.addX *= 0.9; // Slow down the burst speed
                     if (b.addY > 0) { b.addY *= 0.9; }
-                    
-                    // var difX = stage.mouseX-b.x,
-                    //     difY = stage.mouseY-b.y,
-                    //     dist = Math.sqrt(difX*difX + difY*difY);
-                    // if (Math.abs(dist) < DIST) {
-                    // if (clicked) { b.rotationSpeed *= -difX/DIST * 10; }
-                    // b.addX = -difX/DIST * ADD* (b.scale) * factor;
-                    // b.addY = -difY/DIST * ADD* (b.scale) * factor;
-                    // }
-                    // if (b.y > canvas.height+30) {
-                        // addBanana(b, i); // Reset banana
-                    // }
-
-
-                    
-                    // var check1 = b.x < topPipe.x;
-                    // var check2 = b.x > (topPipe.x - topPipe.image.width * 0.8);
 
                     //IF banana left X is in PIPE Range
                     var bounds = topPipe._getBounds();
