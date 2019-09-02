@@ -1,7 +1,7 @@
 var startGameText = 'התחל משחק';
 var reloadGameText = 'התחל משחק\nחדש';
 var scoringGameMessage = 'הניקוד שלך: \n ';
-var startGameMessage = 'עליך להגיע ליותר מ 700 נקודות בדקה!';
+var startGameMessage = 'עליך להגיע ליותר מ 800 נקודות בדקה!';
 var soundFile = './assets/sounds/Switches78.mp3';
 var audio = new Audio(soundFile);
 let iTime = 58;
@@ -104,7 +104,7 @@ function startGame(){
     var slide = 0.999;
     var doubleY = 1.001;
     var endGame = false;
-    var score = false;
+    var checkScore = false;
 
     function tick(event) {
                 if(endGame){
@@ -129,12 +129,8 @@ function startGame(){
                 var newOpsiTime = (slide === -1) ? opsiTime * -1 : opsiTime;
                 
                 var bounds = topPipe._getBounds();
-                // console.log(topPipe.x,slide, newOpsiTime,opsiTime,newTime)
                 topPipe.x = topPipe.x + (slide + newOpsiTime);
-
                 var condition1 = bounds.y <= bounds.height * -0.1;
-                // var condition2 = bounds.height - bounds.y;
-                // console.log(bounds);
                 
                 //POSITION
                 if(condition1){
@@ -151,7 +147,7 @@ function startGame(){
                 }
 
                 //SET IMAGE
-                topPipe.image = (score) ? img2 : img1;
+                topPipe.image = (checkScore) ? img2 : img1;
 
                 
                 for (var i=bananas.length-1; i>=0; i--) {
@@ -187,16 +183,17 @@ function startGame(){
                                 .to({y:topY - 50 - (60 - newTime) }, 100)   
                             }
 
-                            score = true;
-                            setTimeout(() => {
-                                score = false;
-                            }, 200);
+
 
                             audio.play();
                             scoreCounter++;
                             score.innerText = scoreCounter;
                             bananas.splice(i,1);
                             b.parent.removeChild(b);
+                            checkScore = true;
+                            setTimeout(() => {
+                                checkScore = false;
+                            }, 200);
 
                         }else if(startLimit){//CHECK IF BANANAS GO SMALL FOR TOP GATE TO SWALLOW
                             if(b.scale > 0.3){
