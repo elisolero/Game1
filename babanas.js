@@ -1,3 +1,5 @@
+screen.orientation.lock(); 
+
 var startGameText = 'התחל משחק';
 var reloadGameText = 'התחל משחק\nחדש';
 var scoringGameMessage = 'הניקוד שלך: \n ';
