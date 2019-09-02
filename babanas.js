@@ -1,12 +1,10 @@
 var startGameText = 'התחל משחק';
 var reloadGameText = 'התחל משחק\nחדש';
 var scoringGameMessage = 'הניקוד שלך: \n ';
-var startGameMessage = 'עליך להגיע ליותר מ 800 נקודות בדקה!';
+var startGameMessage = 'עליך להגיע ליותר מ 1500 נקודות בדקה!';
 var soundFile = './assets/sounds/Switches78.mp3';
 var audio = new Audio(soundFile);
 let iTime = 58;
-// var img_1;
-// var img_2;
 
 function renderView(){
     let start = document.getElementById('start');
@@ -20,8 +18,6 @@ function renderView(){
     end.style.marginTop = window.innerHeight * 0.4;
     // end.style.left = start.style.left;
     // end.style.width = start.clientWidth;
-    // img_1 = document.getElementById("img_3");
-    // img_2 = document.getElementById("img_4");
 }
 
 
@@ -39,13 +35,13 @@ function startGame(){
     var double = 1.0005;
 
     var img1 = document.createElement("img");
-    img1.src = "./assets/images/stat1.png";
+    img1.src = "./assets/images/stat2.png";
     img1.onload = init;
     img1.width = img_1.width;
     img1.height = img_1.height;
     
     var img2 = document.createElement("img");
-    img2.src = "./assets/images/stat2.png";
+    img2.src = "./assets/images/stat1.png";
     img2.onload = init;
     img2.width = img_2.width;
     img2.height = img_2.height;
@@ -53,14 +49,17 @@ function startGame(){
     var img3 = document.createElement("img");
     img3.src = "./assets/images/benel1.png";
     img3.onload = init;
-    img3.width = img_1.width;
-    img3.height = img_1.height;
+    img3.width = img_3.width;
+    img3.height = img_3.height;
     
     var img4 = document.createElement("img");
     img4.src = "./assets/images/benel2.png";
     img4.onload = init;
-    img4.width = img_2.width;
-    img4.height = img_2.height;
+    img4.width = img_4.width;
+    img4.height = img_4.height;
+
+    var imagesArr = [img1,img2,img3,img4];
+    var imagesArrBool = false;
 
     var scoreCounter = 0;
     var score = document.getElementById("score");
@@ -176,7 +175,7 @@ function startGame(){
 
                             if(topY+ topPipe.image.height < bottomPipe.y){
                                 createjs.Tween.get(topPipe)
-                                .to({y:topY + 10}, 100)
+                                .to({y:topY + 5}, 100)
                                 .to({y:topY - 5 - (60 - newTime) * 0.3 }, 100)   
                             }else{
                                 createjs.Tween.get(topPipe)
@@ -313,10 +312,16 @@ function startGame(){
 
     function changePerson(){
         
-        setTimeout(() => {
-            img1 = img3;
-            img2 = img4;
-        }, 30000);
+        setInterval(() => {
+            if(imagesArrBool){
+                img1 = imagesArr[0];
+                img2 = imagesArr[1];
+            }else{
+                img1 = imagesArr[2];
+                img2 = imagesArr[3]; 
+            }
+            imagesArrBool = !imagesArrBool;
+        }, 10000);
     }
 
     function addTopGate(){
@@ -374,7 +379,6 @@ function startGame(){
     window.addEventListener("resize", handleResize, false);
 
     function handleResize(event) {
-        // debugger;
     var w = window.innerWidth,
         h = window.innerHeight;
     canvas.width = w; canvas.height = h;
