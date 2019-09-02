@@ -5,8 +5,8 @@ var startGameMessage = 'עליך להגיע ליותר מ 497 נקודות בד�
 var soundFile = './assets/sounds/Switches78.mp3';
 var audio = new Audio(soundFile);
 let iTime = 58;
-var img_1;
-var img_2;
+// var img_1;
+// var img_2;
 
 function renderView(){
     let start = document.getElementById('start');
@@ -20,8 +20,8 @@ function renderView(){
     end.style.marginTop = window.innerHeight * 0.4;
     // end.style.left = start.style.left;
     // end.style.width = start.clientWidth;
-    img_1 = document.getElementById("img_1");
-    img_2 = document.getElementById("img_2");
+    // img_1 = document.getElementById("img_3");
+    // img_2 = document.getElementById("img_4");
 }
 
 
@@ -37,6 +37,30 @@ function startGame(){
     var newTime = iTime;
     var imageInitSize  = {};
     var double = 1.0005;
+
+    var img1 = document.createElement("img");
+    img1.src = "./assets/images/stat1.png";
+    img1.onload = init;
+    img1.width = img_1.width;
+    img1.height = img_1.height;
+    
+    var img2 = document.createElement("img");
+    img2.src = "./assets/images/stat2.png";
+    img2.onload = init;
+    img2.width = img_2.width;
+    img2.height = img_2.height;
+
+    var img3 = document.createElement("img");
+    img3.src = "./assets/images/benel1.png";
+    img3.onload = init;
+    img3.width = img_1.width;
+    img3.height = img_1.height;
+    
+    var img4 = document.createElement("img");
+    img4.src = "./assets/images/benel2.png";
+    img4.onload = init;
+    img4.width = img_2.width;
+    img4.height = img_2.height;
 
     var scoreCounter = 0;
     var score = document.getElementById("score");
@@ -104,16 +128,12 @@ function startGame(){
                 var newOpsiTime = (slide === -1) ? opsiTime * -1 : opsiTime;
                 
                 var bounds = topPipe._getBounds();
-
                 // console.log(topPipe.x,slide, newOpsiTime,opsiTime,newTime)
                 topPipe.x = topPipe.x + (slide + newOpsiTime);
 
-
-
                 var condition1 = bounds.y <= bounds.height * -0.1;
-                var condition2 = bounds.height - bounds.y;
+                // var condition2 = bounds.height - bounds.y;
                 // console.log(bounds);
-
                 
                 //POSITION
                 if(condition1){
@@ -121,11 +141,6 @@ function startGame(){
                 }else{
                     doubleY = 0.999;
                 }
-                // else if(bounds.y < 100){
-                //     doubleY = 0.999;
-                // }
-
-                // topPipe.y *= doubleY;
 
                 //SIZE
                 if(topPipe.scaleX > 1.5){
@@ -188,13 +203,7 @@ function startGame(){
 
                         if(topLimit){
 
-                            // var img = document.getElementById("img");
-                            // topPipe.image = img;
-
                             var topY = (topPipe.y < 0) ? 0 : topPipe.y;
-                            // var topY = (topPipe.y < 0) ? 0 : topPipe.y;
-                            // console.log(topY+ topPipe.image.height , bottomPipe.y)
-                            // console.log(topY+ topPipe.image.height > bottomPipe.y)
                             if(topY+ topPipe.image.height < bottomPipe.y){
                                 createjs.Tween.get(topPipe)
                                 .to({y:topY + 10}, 100)
@@ -204,9 +213,8 @@ function startGame(){
                                 .to({y:topY - 5 - (60 - newTime) }, 100)   
                             }
 
-                            // .to({rotation:2, rotationDir:1})
-                            // .wait(100)
-                            // .to({rotation:0, rotationDir:1})
+
+
                             audio.play();
                             scoreCounter++;
                             score.innerText = scoreCounter;
@@ -315,17 +323,6 @@ function startGame(){
 
     function addTopGateFromHTML(){
 
-        var img1 = document.createElement("img");
-        img1.src = "./assets/images/benel1.png";
-        img1.onload = init;
-        img1.width = img_1.width;
-        img1.height = img_1.height;
-        
-        var img2 = document.createElement("img");
-        img2.src = "./assets/images/benel2.png";
-        img2.onload = init;
-        img2.width = img_2.width;
-        img2.height = img_2.height;
         topPipe = new createjs.Bitmap(img2);
         topPipe.set({
                 x: window.innerWidth/2 + (img2.width/2),
@@ -333,10 +330,15 @@ function startGame(){
             });
 
         cont.addChild(topPipe);
+        changePerson();
+    }
 
+
+    function changePerson(){
+        
         setInterval(() => {
             topPipe.image = (topPipe.image === img2) ? img1 : img2;
-        }, 500);
+        }, 5000);
     }
 
     function addTopGate(){
